@@ -57,7 +57,7 @@ public class IdentityClientTests {
         // setup
         UserAssertion userAssertion = new UserAssertion(ON_BEHALF_TOKEN );
         TokenRequestContext request = new TokenRequestContext().addScopes(SCOPE_URL);
-        OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
+        OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusDays(1);
 
         // mock
         mockForOnBehalfOfFlowCredential(ON_BEHALF_TOKEN , request, expiresOn);
