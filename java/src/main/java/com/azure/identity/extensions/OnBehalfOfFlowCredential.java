@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 public class OnBehalfOfFlowCredential implements TokenCredential {
     private final IdentityClient identityClient;
     private final UserAssertion userAssertion;
-    private final ClientLogger logger = new ClientLogger(StaticTokenCredential.class);
+    private final ClientLogger logger = new ClientLogger(OnBehalfOfFlowCredential.class);
 
     /**
      * Creates a OnBehalfOfCredential
