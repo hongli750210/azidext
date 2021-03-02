@@ -5,7 +5,7 @@ import com.azure.core.credential.TokenRequestContext;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.time.OffsetDateTime;
+import java.time.*;
 
 public class StaticTokenCredentialTests {
 
@@ -13,7 +13,7 @@ public class StaticTokenCredentialTests {
     public void testValidStaticTokenString() {
         String token = "token1";
         TokenRequestContext request = new TokenRequestContext().addScopes("https://management.azure.com");
-        OffsetDateTime expiresAt = OffsetDateTime.MIN;
+        OffsetDateTime expiresAt = OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).plusDays(1);
         // test
         StaticTokenCredential credential =
             new StaticTokenCredentialBuilder().tokenString(token).build();
@@ -24,7 +24,7 @@ public class StaticTokenCredentialTests {
 
     @Test
     public void testValidStaticAccessToken() {
-        AccessToken token = new AccessToken("token1", OffsetDateTime.MIN);
+        AccessToken token = new AccessToken("token1", OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.UTC).plusDays(1));
         TokenRequestContext request = new TokenRequestContext().addScopes("https://management.azure.com");
         // test
         StaticTokenCredential credential =
