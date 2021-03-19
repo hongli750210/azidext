@@ -3,6 +3,7 @@ package com.azure.identity.extensions;
 import com.azure.core.credential.AccessToken;
 import com.azure.identity.extensions.implementation.util.ValidationUtil;
 
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 
 /**
@@ -13,6 +14,8 @@ import java.util.HashMap;
 public class StaticTokenCredentialBuilder extends CredentialBuilderBase<StaticTokenCredentialBuilder> {
 
     private String tokenString;
+
+    private OffsetDateTime expiresAt;
 
     private AccessToken accessToken;
 
@@ -25,6 +28,18 @@ public class StaticTokenCredentialBuilder extends CredentialBuilderBase<StaticTo
      */
     public StaticTokenCredentialBuilder tokenString(String tokenString) {
         this.tokenString = tokenString;
+        return this;
+    }
+
+    /**
+     * Sets the prefetched token string for the token.
+     *
+     * @param expiresAt The string of prefetched token
+     *
+     * @return The updated StaticTokenCredentialBuilder object.
+     */
+    public StaticTokenCredentialBuilder expiresAt(OffsetDateTime expiresAt) {
+        this.expiresAt = expiresAt;
         return this;
     }
 
@@ -50,7 +65,13 @@ public class StaticTokenCredentialBuilder extends CredentialBuilderBase<StaticTo
             put("tokenString", tokenString);
             put("accessToken", accessToken);
         }});
-        return new StaticTokenCredential(tokenString, accessToken);
+        if ( accessToken == null ) {
+            ValidationUtil.validateAllEmpty(getClass().getSimpleName(), new HashMap<String, Object>() {{
+                put("tokenString", tokenString);
+                put("expiresAt", expiresAt);
+            }});
+        }
+        return new StaticTokenCredential(tokenString, expiresAt, accessToken);
     }
 
 }

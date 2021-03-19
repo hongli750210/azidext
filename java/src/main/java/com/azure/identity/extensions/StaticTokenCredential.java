@@ -21,10 +21,10 @@ public class StaticTokenCredential implements TokenCredential {
      * @param tokenString The string of prefetched token
      * @param accessToken The prefetched token
      */
-    StaticTokenCredential(String tokenString, AccessToken accessToken) {
+    StaticTokenCredential(String tokenString, OffsetDateTime expiresAt, AccessToken accessToken) {
         this.accessToken = new AccessToken(
             tokenString != null ? tokenString : accessToken.getToken(),
-            tokenString != null ? OffsetDateTime.MIN : accessToken.getExpiresAt()
+            tokenString != null ? expiresAt : accessToken.getExpiresAt()
         );
     }
 

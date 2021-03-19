@@ -16,7 +16,7 @@ public class StaticTokenCredentialTests {
         OffsetDateTime expiresAt = OffsetDateTime.now(ZoneOffset.UTC).plusDays(1);;
         // test
         StaticTokenCredential credential =
-            new StaticTokenCredentialBuilder().tokenString(token).build();
+            new StaticTokenCredentialBuilder().tokenString(token).expiresAt(expiresAt).build();
         AccessToken accessToken = credential.getToken(request).block();
         Assert.assertEquals(token, accessToken.getToken());
         Assert.assertEquals(expiresAt, accessToken.getExpiresAt());
